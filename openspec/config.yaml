@@ -1,0 +1,35 @@
+# OpenSpec 配置
+
+# 工作流 profile：
+# - core：仅保留核心链路（propose / explore / apply / verify / sync / archive）
+# - custom：全量工作流
+profile: core
+
+# 变更 ID 命名规则：kebab-case 动词开头，如 add-user-auth、fix-empty-export
+change_id_pattern: "^[a-z][a-z0-9]+(-[a-z0-9]+)*$"
+
+# 归档目录命名：日期前缀 + 原变更 ID
+archive:
+  date_prefix: true   # 形如 2026-09-15-add-user-auth
+
+# specs delta 语义合并
+delta:
+  markers:
+    added: "## ADDED Requirements"
+    modified: "## MODIFIED Requirements"
+    removed: "## REMOVED Requirements"
+  merge_on_archive: true
+
+# 变更工件（每个 changes/<change-id>/ 下的文件）
+change_artifacts:
+  - proposal.md     # 变更提案：为什么、改什么、影响什么
+  - design.md       # 设计：方案与权衡（与 superpowers brainstorming 联动）
+  - tasks.md        # 任务拆分（与 superpowers writing-plans 联动）
+  - specs/          # specs delta：按能力分文件的增量规格
+
+# 与 superpowers 层的衔接约定
+workflow_bridge:
+  # brainstorming 产出的设计文档 → 同步进变更的 design.md
+  design_from: superpowers/specs/
+  # writing-plans 产出的计划 → 同步进变更的 tasks.md
+  tasks_from: superpowers/plans/
