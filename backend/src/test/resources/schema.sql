@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS demo_item;
+
+CREATE TABLE demo_item (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

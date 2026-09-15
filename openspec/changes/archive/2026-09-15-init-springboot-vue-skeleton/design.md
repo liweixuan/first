@@ -20,9 +20,10 @@
 理由：JDK 17 是用户环境约束；3.5 线官方兼容 Java 17–25，是 3.x 当前主流且第三方生态（MyBatis-Plus、Knife4j）适配最全。Boot 4.x 虽官方基线含 Java 17，但生态兼容尚在追赶期，骨架阶段不冒险。
 备选：Boot 4.1.x（新但生态风险）、Boot 2.7.x（已 EOL，排除）。
 
-### D2 持久层：MyBatis-Plus + MySQL 8
+### D2 持久层：MyBatis-Plus + MySQL 8+
 理由：MP 是 MyBatis 生态事实标准，分页插件、条件构造器开箱即用，SQL 可见便于排查；与国内业务场景契合。
-备选：Spring Data JPA（简单 CRUD 零代码但复杂查询成本高）、JOOQ（类型安全但学习曲线陡）。
+版本决策（2026-09-15 apply 时用户确认）：联调使用本地已运行的 MySQL 9.7.1（root 免密），骨架场景与 MySQL 8 完全兼容；测试环境仍用 H2 隔离。驱动版本由 Spring Boot BOM 管理。
+备选：Spring Data JPA（简单 CRUD 零代码但复杂查询成本高）、JOOQ（类型安全但学习曲线陡）；Docker MySQL 8（版本一字不差但多一个常驻容器）。
 
 ### D3 分层：Controller / Service / Repository + 统一信封 + 全局异常
 理由：三层是 Spring 惯例，骨架即团队默认；统一信封 `{code, message, data}` 与异常处理器集中承载规格中的"统一响应"与"错误转换"两条行为契约，避免各 Controller 自行处理。
