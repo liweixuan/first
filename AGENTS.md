@@ -34,8 +34,77 @@
 | `superpowers/specs/` | 设计文档（brainstorming 产出） | 代理（HARD-GATE 批准后） |
 | `superpowers/plans/` | 执行计划（writing-plans 产出） | 代理 |
 | `superpowers/skills/` | 流程纪律定义 | 项目维护者 |
-| `src/` | 生产代码 | 仅 TDD 流程内 |
-| `tests/` | 测试代码 | 先于生产代码 |
+| `backend/` | **Git submodule**：Spring Boot 业务后端 | submodule 独立 commit（详见下节） |
+| `frontend/` | **Git submodule**：Vue3 + TS SPA 前端 | submodule 独立 commit（详见下节） |
+| `src/` | 跨子模块实验性代码（一般不使用） | 仅原型场景 |
+| `tests/` | 跨子模块实验性测试（一般不使用） | 仅原型场景 |
+
+## Git Submodule 工作流
+
+本项目是三层仓库结构：
+
+| 仓库层 | 远程仓库 | 内容 |
+| --- | --- | --- |
+| **Workspace（本仓库）** | https://github.com/liweixuan/first.git | orchestration 层：`harness/`、`openspec/`、`superpowers/`、`.gitmodules`、`AGENTS.md` + 两个 submodule 指针 |
+| **`backend/`** (submodule) | https://github.com/liweixuan/first_backend.git | Java 17 + Spring Boot + MyBatis-Plus + MySQL/H2 + Maven + JUnit/Mockito |
+| **`frontend/`** (submodule) | https://github.com/liweixuan/first_frontend.git | Vue 3 + TypeScript + Vite + Pinia + Element Plus + Vitest + axios |
+
+`harness/`、`openspec/`、`superpowers/` 留在 workspace 仓库本体（不分子模块）。
+
+### 首次克隆 workspace
+
+```bash
+git clone <workspace-url> my-first-project
+cd my-first-project
+git submodule update --init --recursive
+```
+
+**未跑 `submodule update --init` 时，`backend/` 与 `frontend/` 是空目录**——CI / 新成员 onboarding 必须显式 init。
+
+### 在子模块内开发
+
+```bash
+cd backend           # 进入独立仓库工作树
+git checkout main
+# 修改文件……
+git add . && git commit -m "feat: ..."
+git push origin main
+cd ..
+
+cd frontend          # 同样模式
+```
+
+子模块有独立 commit 历史与 remote。**禁止在 workspace 根直接编辑 `backend/` 或 `frontend/` 内的文件**——下次 `git submodule update` 会覆盖本地改动。
+
+### workspace 升级子模块指针
+
+当 backend/frontend 推送了新 commit 后，回到 workspace 根记录新引用：
+
+```bash
+git add backend frontend
+git commit -m "chore: bump submodule refs to <reason>"
+```
+
+workspace 的 commit 仅记录 submodule 引用版本与 orchestration 层（spec、harness）变更，不混入子模块代码改动。
+
+### 跨子模块的 OpenSpec 协调
+
+OpenSpec 变更同时涉及 backend 与 frontend 时：
+
+- `proposal.md` / `design.md` / `specs/<capability>/spec.md` / `tasks.md` 在 **workspace 仓库** 写（spec 是跨模块契约）
+- 后端实现细节在 `backend/` 独立 commit（Java 类型、Mapper、Controller）
+- 前端实现细节在 `frontend/` 独立 commit（TS 类型、Store、View、API client）
+- workspace 的 commit 仅承载 spec 文档 + submodule 指针 bump
+- `tasks.md` 中 1 个子模块任务对应 1 个独立 PR（submodule 仓库 PR），不是 workspace 1 个 commit
+
+### 排错指引
+
+| 症状 | 原因 | 处理 |
+| --- | --- | --- |
+| `backend/` 或 `frontend/` 为空 | 未 init submodule | `git submodule update --init --recursive` |
+| `git submodule status` 显示 `-` 前缀 | submodule 未初始化 | 同上 |
+| submodule 内 commit 找不到 branch | detached HEAD | `cd backend && git checkout main` |
+| workspace commit 想纳入 backend 代码改动 | 违反 submodule 边界 | revert workspace 改动，去 backend/ 内独立 commit |
 
 ## 优先级顺序
 

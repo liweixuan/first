@@ -1,0 +1,42 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Dependencies
+node_modules/
+vendor/
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Build outputs
+dist/
+build/
+out/
+target/
+*.log
+
+# Environment & secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Harness session reports（会话日志是个人工作记录，可选择性提交）
+harness/reports/*.md
+!harness/reports/session-log-template.md
+!harness/reports/repair-plan-template.md
+
+# OpenSpec workspace 临时目录
+.openspec/
+
+# Worktrees & probes (orchestration workspace 本地隔离目录，不入库)
+.worktrees/
+.probe/
