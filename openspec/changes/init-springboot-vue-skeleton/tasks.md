@@ -1,20 +1,20 @@
 ## 1. 后端工程初始化
 
-- [ ] 1.1 创建 `backend/` Maven 工程（pom.xml：spring-boot-starter-parent 3.5.x，依赖 web/mybatis-plus-boot3-starter/mysql/h2(测试)/springdoc+knife4j），验证 `mvn -q compile` 成功
-- [ ] 1.2 建立测试基线：application-test.yml（H2）+ 最小 @SpringBootTest 空上下文测试，验证 `mvn test` 全绿
+- [x] 1.1 创建 `backend/` Maven 工程（pom.xml：spring-boot-starter-parent 3.5.x，依赖 web/mybatis-plus-boot3-starter/mysql/h2(测试)/springdoc+knife4j），验证 `mvn -q compile` 成功
+- [x] 1.2 建立测试基线：application-test.yml（H2）+ 最小 @SpringBootTest 空上下文测试，验证 `mvn test` 全绿
 
 ## 2. 后端横切件（TDD：先红后绿）
 
-- [ ] 2.1 统一信封：先写失败测试覆盖"成功响应 code=0 / 业务错误 data=null"两场景，再实现 ApiResponse，验证测试红转绿
-- [ ] 2.2 全局异常处理：先写失败测试覆盖"业务异常→200 信封 / 未知异常→500 信封且无堆栈"，再实现 BizException + GlobalExceptionHandler，验证红转绿
-- [ ] 2.3 健康检查：先写 MockMvc 失败测试（GET /api/health 返回 code=0 且 data.status=UP），再实现接口，验证红转绿
+- [x] 2.1 统一信封：先写失败测试覆盖"成功响应 code=0 / 业务错误 data=null"两场景，再实现 ApiResponse，验证测试红转绿
+- [x] 2.2 全局异常处理：先写失败测试覆盖"业务异常→200 信封 / 未知异常→500 信封且无堆栈"，再实现 BizException + GlobalExceptionHandler，验证红转绿
+- [x] 2.3 健康检查：先写 MockMvc 失败测试（GET /api/health 返回 code=0 且 data.status=UP），再实现接口，验证红转绿
 
 ## 3. 后端示例资源（TDD）
 
-- [ ] 3.1 DemoItem 实体 + MP Mapper + H2 schema/种子数据，验证 mapper 集成测试通过
-- [ ] 3.2 分页查询：先写失败测试覆盖"空数据 total=0/有数据 records+total 正确"，再实现 service + controller（GET /api/demo-items），验证 MockMvc 全链路测试红转绿
-- [ ] 3.3 配置 MP 分页插件并启用，验证分页集成测试仍绿
-- [ ] 3.4 接入 SpringDoc + Knife4j，验证 `/doc.html` 可访问且列出健康检查与示例资源接口
+- [x] 3.1 DemoItem 实体 + MP Mapper + H2 schema/种子数据，验证 mapper 集成测试通过
+- [x] 3.2 分页查询：先写失败测试覆盖"空数据 total=0/有数据 records+total 正确"，再实现 service + controller（GET /api/demo-items），验证 MockMvc 全链路测试红转绿
+- [x] 3.3 配置 MP 分页插件并启用，验证分页集成测试仍绿
+- [x] 3.4 接入 SpringDoc + Knife4j，验证 `/doc.html` 可访问且列出健康检查与示例资源接口
 
 ## 4. 前端工程初始化
 
