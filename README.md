@@ -111,7 +111,27 @@ my-first-project/
 └── tests/                         # 测试代码
 ```
 
-## 快速开始
+## 快速开始（骨架 dev 联调）
+
+> 环境要求：JDK 17、Maven 3.9+、Node.js 20+、MySQL（本地 3306，root 免密或环境变量覆盖）。
+
+```bash
+# 1. 初始化 MySQL 库表与种子数据（幂等，可重复执行）
+mysql -uroot < backend/db/init.sql
+
+# 2. 启动后端（端口 8080，API 文档 http://localhost:8080/doc.html）
+cd backend && mvn spring-boot:run
+
+# 3. 另开终端启动前端（端口 5173，Vite 代理 /api → 8080）
+cd frontend && npm install && npm run dev
+```
+
+打开 http://localhost:5173/ 即可看到首页与「示例资源」列表页（数据来自 MySQL 种子）。
+`backend/src/main/resources/application.yml` 支持 `DB_URL` / `DB_USERNAME` / `DB_PASSWORD` 环境变量覆盖连接配置。
+
+测试：后端 `cd backend && mvn test`（H2 隔离，12 个测试）；前端 `cd frontend && npm run test:unit`（Vitest，6 个测试）。
+
+## 纪律快速开始
 
 1. 阅读 [AGENTS.md](AGENTS.md)，了解代理总纪律。
 2. 每次会话开始时，代理必须先执行 `harness/lifecycle/SESSION-START.md` 检查清单。

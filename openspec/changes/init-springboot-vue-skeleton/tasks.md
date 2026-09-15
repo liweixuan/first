@@ -18,16 +18,16 @@
 
 ## 4. 前端工程初始化
 
-- [ ] 4.1 用 create-vue 脚手架 `frontend/`（TS + Router + Pinia + Vitest），验证 `npm run dev` 可启动
-- [ ] 4.2 集成 Element Plus + axios，Vite 代理 `/api` → `http://localhost:8080`，验证 `npm run build` 成功
+- [x] 4.1 用 create-vue 脚手架 `frontend/`（TS + Router + Pinia + Vitest），验证 `npm run dev` 可启动
+- [x] 4.2 集成 Element Plus + axios，Vite 代理 `/api` → `http://localhost:8080`，验证 `npm run build` 成功
 
 ## 5. 前端骨架行为（TDD）
 
-- [ ] 5.1 axios 封装：先写 Vitest 失败测试（code≠0 → rejected 且提示 message / 网络错误 → 通用提示），再实现拦截器封装，验证红转绿
-- [ ] 5.2 demo store：先写失败测试（查询成功写入 records/total），再实现 Pinia store，验证红转绿
-- [ ] 5.3 页面：首页布局（导航+内容区）+ 示例资源列表页（Element Plus 表格+分页），组件测试验证渲染，红转绿
+- [x] 5.1 axios 封装：先写 Vitest 失败测试（code≠0 → rejected 且提示 message / 网络错误 → 通用提示），再实现拦截器封装，验证红转绿
+- [x] 5.2 demo store：先写失败测试（查询成功写入 records/total），再实现 Pinia store，验证红转绿
+- [x] 5.3 页面：首页布局（导航+内容区）+ 示例资源列表页（Element Plus 表格+分页），组件测试验证渲染，红转绿
 
 ## 6. 端到端验证
 
-- [ ] 6.1 同时启动前后端，浏览器验证：列表页展示 MySQL 种子数据；后端停掉时页面显示统一错误提示（对照 specs 场景逐条核验）
-- [ ] 6.2 全量回归：`mvn test` 与 `npm run test` 均 0 failures；在根 README 补写"一键启动"说明
+- [x] 6.1 同时启动前后端，浏览器验证：列表页展示 MySQL 种子数据；后端停掉时页面显示统一错误提示（对照 specs 场景逐条核验）
+- [x] 6.2 全量回归：`mvn test` 与 `npm run test` 均 0 failures；在根 README 补写"一键启动"说明
